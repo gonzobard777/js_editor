@@ -1,0 +1,18 @@
+@value resizableRect: '../../../figure.module.css';
+
+@value hoverBg, lineColor from resizableRect;
+
+.container {
+  stroke: lineColor;
+  stroke-width: 1px;
+  fill: white;
+  user-select: none;
+}
+
+.isHovered {
+  fill: hoverBg;
+}
+
+.isMoving {
+  fill: lineColor;
+}

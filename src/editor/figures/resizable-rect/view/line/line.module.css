@@ -1,0 +1,7 @@
+@value resizableRect: '../../../figure.module.css';
+
+@value lineColor from resizableRect;
+
+.container {
+  stroke: lineColor;
+}
