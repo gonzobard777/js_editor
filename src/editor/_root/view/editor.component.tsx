@@ -1,22 +1,20 @@
 import {useCellState} from '@do-while-for-each/tree-cell-react';
-import {useEffect, useRef, useState} from 'react';
-import {EditorController} from '../controller/editor.controller';
+import {useEffect, useRef} from 'react';
 import s from './editor.module.css';
-import {EditorState} from '../state/editor.state';
+import {Editor} from '../editor';
 
 /**
  * У редактора должен быть:
  *   • корневой элемент и контроллер, обслуживающий его
  *   • состояние, расшаренное между внутренними частями
  */
-export function EditorComponent({width, height, editorState}: IProps) {
+export function EditorComponent({editor}: IProps) {
   const containerRef = useRef<SVGSVGElement>(null);
-  const [controller] = useState(() => new EditorController(editorState));
-  const [{isReady, figures}] = useCellState(() => controller.state);
+  const [{isReady, figures, width, height}] = useCellState(() => editor.renderState);
 
   useEffect(() => {
-    controller.setContainerElement(containerRef.current!);
-    return () => controller.dispose();
+    editor.setElement(containerRef.current!);
+    return () => editor.dispose();
   }, []);
 
   return (
@@ -30,7 +28,5 @@ export function EditorComponent({width, height, editorState}: IProps) {
 
 
 interface IProps {
-  width: number;
-  height: number;
-  editorState: EditorState;
+  editor: Editor;
 }

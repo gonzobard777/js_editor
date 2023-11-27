@@ -1,5 +1,5 @@
-import {EditorState} from './_root';
 import {IResizableRectFigureInit} from './figures';
+import {Editor} from './_root';
 
 export type IEditorFigureType = 'resizable-rect';
 
@@ -12,7 +12,7 @@ export interface IEditorFigure extends IEditorFigureBase {
 
   getComponent(): any; // Компонент для рендера фигуры
 
-  setEditorState(state: EditorState): void;
+  setEditor(state: Editor): void;
 
   dispose(): void;
 

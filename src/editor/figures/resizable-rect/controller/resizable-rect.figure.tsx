@@ -4,7 +4,7 @@ import {ResizableRectComponent} from '../view/resizable-rect.component';
 import {CornerMoveHandler} from './corner-move-handler';
 import {IResizableRectFigureInit} from '../contract';
 import {BaseFigure} from '../../_base/base.figure';
-import {EditorState} from '../../../_root';
+import {Editor} from '../../../_root';
 import {Corner} from './corner';
 
 const lineOpt: IStraightLineOpt = {maxDecimalsInPointCoords: 2, makeCrisp: true};
@@ -34,16 +34,6 @@ export class ResizableRectFigure extends BaseFigure {
     this.leftBottom = new Corner('leftBottom', leftBottom, this);
   }
 
-  setEditorState(editorState: EditorState): void {
-    super.setEditorState(editorState);
-    this.disposeAll.storage.push(
-      autorun(() => [this.editor.events.mouseUp, this.editor.events.mouseLeave], {
-        skipInitResult: true,
-        onChange: () => setTimeout(this.stopCornerMovement), // при клике по угловой точке ведет себя некорректно без макротаски
-      }),
-    );
-  }
-
   get state() {
     const leftTop = this.leftTop.state;
     const rightTop = this.rightTop.state;
@@ -58,6 +48,16 @@ export class ResizableRectFigure extends BaseFigure {
         new StraightLine(leftBottom.point, rightBottom.point, lineOpt)
       ]
     };
+  }
+
+  setEditor(editorState: Editor): void {
+    super.setEditor(editorState);
+    this.disposeAll.storage.push(
+      autorun(() => [this.editor.events.mouseUp, this.editor.events.mouseLeave], {
+        skipInitResult: true,
+        onChange: () => setTimeout(this.stopCornerMovement), // при клике по угловой точке ведет себя некорректно без макротаски
+      }),
+    );
   }
 
   getCorner(pos: ICornerPointPosition) {

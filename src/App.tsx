@@ -1,14 +1,12 @@
-import {autorun} from '@do-while-for-each/tree-cell';
 import {useState} from 'react';
-import {EditorComponent, EditorState} from './editor';
-import {ResizableRectFigure} from './editor/figures';
+import {Editor} from './editor';
 
 const figureId = 'map-template-area';
 
 export function App() {
 
-  const [editorState] = useState(() => {
-    const editorState = new EditorState([
+  const [editor] = useState(() => {
+    const editor = new Editor(1000, 800, [
       {
         id: figureId,
         type: 'resizable-rect',
@@ -19,17 +17,25 @@ export function App() {
           leftBottom: [300, 400],
         },
       },
+      {
+        id: '12',
+        type: 'resizable-rect',
+        corners: {
+          leftTop: [200, 150],
+          rightTop: [400, 150],
+          rightBottom: [400, 300],
+          leftBottom: [200, 300],
+        },
+      },
     ]);
 
-    let {figure} = editorState.getFigure<ResizableRectFigure>(figureId);
-    autorun(() => {
-      // console.log(``, figure!.state)
-    });
+    // let {figure} = editor.getFigure<ResizableRectFigure>(figureId);
+    // autorun(() => {
+    //   console.log(``, figure!.state)
+    // });
 
-    return editorState;
+    return editor;
   });
 
-  return (
-    <EditorComponent width={1000} height={800} editorState={editorState}/>
-  );
+  return editor.getComponent();
 }

@@ -1,19 +1,19 @@
 import {IEditorFigure, IEditorFigureBase, IEditorFigureType} from '../../contract';
-import {EditorState} from '../../_root';
+import {Editor} from '../../_root';
 
 export abstract class BaseFigure implements IEditorFigure {
 
   id: any;
   type: IEditorFigureType;
-  editor: EditorState;
+  editor: Editor;
 
   protected constructor(init: IEditorFigureBase) {
     this.id = init.id;
     this.type = init.type;
   }
 
-  setEditorState(editorState: EditorState): void {
-    this.editor = editorState;
+  setEditor(editor: Editor): void {
+    this.editor = editor;
   }
 
   abstract getComponent(): any;
